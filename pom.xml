@@ -6,8 +6,33 @@
 
     <groupId>cn.belier</groupId>
     <artifactId>swagger-customer-api</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
+
+    <name>swagger-customer-api</name>
+    <description>添加swagger额外的接口文档</description>
+    <url>https://github.com/belier-cn/swagger-customer-api</url>
+
+
+    <licenses>
+        <license>
+            <name>The MIT License (MIT)</name>
+            <url>https://github.com/belier-cn/swagger-customer-api/blob/master/LICENSE</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>belier</name>
+            <email>belier@belier.cn</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git@github.com:belier-cn/swagger-customer-api.git</connection>
+        <developerConnection>scm:git@github.com:belier-cn/swagger-customer-api.git</developerConnection>
+        <url>git@github.com:belier-cn/swagger-customer-api.git</url>
+    </scm>
 
     <properties>
         <gpg-plugin.version>1.6</gpg-plugin.version>
@@ -19,6 +44,10 @@
         <java.version>1.8</java.version>
         <javadoc.version>8</javadoc.version>
 
+        <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
+        <springframework.version>5.0.0.RELEASE</springframework.version>
+        <reflections.version>0.9.11</reflections.version>
+        <lombok.version>1.18.6</lombok.version>
     </properties>
 
     <dependencies>
@@ -26,31 +55,31 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
+            <version>${springfox-swagger2.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>5.0.0.RELEASE</version>
+            <version>${springframework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>5.0.0.RELEASE</version>
+            <version>${springframework.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>0.9.11</version>
+            <version>${reflections.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.6</version>
+            <version>${lombok.version}</version>
         </dependency>
 
     </dependencies>
@@ -85,16 +114,73 @@
         </plugins>
     </build>
 
-    <distributionManagement>
-        <repository>
-            <id>maven-releases</id>
-            <url>http://nexus.kerkr.com/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-snapshots</id>
-            <url>http://nexus.kerkr.com/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${source-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <attach>true</attach>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${javadoc-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <links>
+                                <link>https://docs.oracle.com/javase/${javadoc.version}/docs/api</link>
+                            </links>
+                            <doclint>none</doclint>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+                </snapshotRepository>
+                <repository>
+                    <id>oss</id>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
 
 </project>
