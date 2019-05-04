@@ -16,6 +16,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * {@link SwaggerCustomerApiScanner}
+ *
  * @author belier
  * @date 2019/4/24
  */
@@ -55,7 +57,7 @@ public class CustomerApiRegistrar implements ImportBeanDefinitionRegistrar {
     private Set<String> getBasePackages(AnnotationMetadata annotationMetadata) {
 
         AnnotationAttributes annotationAttributes = AnnotationAttributes
-                .fromMap(annotationMetadata.getAnnotationAttributes(CustomerApiScanner.class.getName()));
+                .fromMap(annotationMetadata.getAnnotationAttributes(SwaggerCustomerApiScanner.class.getName()));
 
         Set<String> basePackages = new HashSet<>();
 

@@ -10,6 +10,8 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
+ * 扫描需要进行处理的包，默认注解标识的类的包
+ *
  * @author belier
  * @date 2018/10/10
  */
@@ -17,7 +19,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Target(TYPE)
 @Import(CustomerApiRegistrar.class)
-public @interface CustomerApiScanner {
+public @interface SwaggerCustomerApiScanner {
 
     Class<?>[] value() default {};
 

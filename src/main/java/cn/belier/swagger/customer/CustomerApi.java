@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- *
+ * 用于标识该类需要进行 Swagger 文档处理
  *
  * @author belier
  * @date 2019/4/24
