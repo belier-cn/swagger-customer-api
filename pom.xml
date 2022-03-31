@@ -45,7 +45,7 @@
         <javadoc.version>8</javadoc.version>
 
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
-        <springframework.version>5.0.0.RELEASE</springframework.version>
+        <springframework.version>5.3.18</springframework.version>
         <reflections.version>0.9.11</reflections.version>
         <lombok.version>1.18.6</lombok.version>
     </properties>
